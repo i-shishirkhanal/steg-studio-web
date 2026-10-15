@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node serve.mjs",
     "build": "node build.mjs",
-    "test": "node --test steg.test.mjs"
+    "test": "node --test steg.test.mjs",
+    "test:python": "node --test python-interop.test.mjs"
   },
   "engines": {
     "node": ">=22"

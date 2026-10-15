@@ -1,0 +1,14 @@
+{
+  "name": "steg-studio-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.mjs",
+    "build": "node build.mjs",
+    "test": "node --test steg.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

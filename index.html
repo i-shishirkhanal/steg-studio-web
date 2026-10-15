@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hide encrypted messages, files, and audio inside images. A private, browser-only steganography workspace by Shishir Khanal.">
+  <meta name="theme-color" content="#172b25">
+  <title>Steg Studio — A secret worth keeping</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to workspace</a>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Steg Studio home"><img src="/favicon.svg" width="38" height="38" alt=""><span>steg<span class="brand-light">studio</span><small>THE ART OF HIDDEN</small></span></a>
+    <div class="nav-label">YOUR WORKSPACE</div>
+    <nav aria-label="Workspace">
+      <button class="nav-item active" data-mode="hide" aria-current="page"><span class="nav-icon">◈</span> Hide data <span class="nav-arrow">↗</span></button>
+      <button class="nav-item" data-mode="reveal"><span class="nav-icon">◎</span> Reveal data <span class="nav-arrow">↗</span></button>
+      <button class="nav-item" id="history-open"><span class="nav-icon">◷</span> Session history <span class="count" id="history-count">0</span></button>
+    </nav>
+    <div class="sidebar-note"><span class="note-icon">⌁</span><h3>Small pixels.<br>Big possibilities.</h3><p>Something only you know,<br>in something everyone can see.</p><button id="how-open">How it works <span>↗</span></button></div>
+    <div class="sidebar-bottom"><div class="local"><span></span> 100% on your device</div><button id="theme" class="theme-button">◐ <span>Switch appearance</span></button><div class="creator"><span class="avatar">SK</span><span>Shishir Khanal<small>Personal workspace</small></span></div></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="crumb">Hide data</strong></div><button class="help" id="help-open"><span>?</span> Quick guide</button></header>
+    <section class="hero"><div><div class="eyebrow"><span></span> A LITTLE PRIVACY, BY DESIGN</div><h1 id="page-title">A secret worth <em>keeping.</em></h1><p id="page-description">Hide a message, a file, or a little something inside an image.<br>Only the right passphrase brings it back.</p></div><div class="hero-art" aria-hidden="true"><div class="art-orbit"></div><div class="art-card card-back"></div><div class="art-card card-front"><span>✦</span><div class="art-hills"></div><i>••••••••</i></div><span class="art-spark">✧</span></div></section>
+    <div class="workspace-grid">
+      <section class="workflow" aria-label="Steganography workflow">
+        <div class="section-top"><h2 id="workflow-title">Create your hidden message</h2><span class="tag">BROWSER ONLY</span></div>
+        <form id="workspace-form">
+          <fieldset class="step"><legend><span class="step-number">01</span><span id="image-heading">Choose your canvas</span></legend><p class="step-description" id="image-description">An ordinary image. An extraordinary hiding place.</p>
+            <input class="sr-only" type="file" id="cover-input" accept="image/png,image/jpeg,image/webp,image/bmp" aria-label="Choose cover image">
+            <button type="button" class="dropzone" id="cover-pick"><span class="upload-icon">↥</span><strong id="drop-title">Drop an image here, or <u>browse files</u></strong><span id="drop-subtitle">PNG, JPG, WebP or BMP · up to 25 MB / 16 megapixels</span></button>
+            <div class="cover-actions"><span id="cover-name">No image selected</span><button type="button" id="demo-cover" class="text-button">Try a sample image ↗</button><button type="button" id="cover-clear" class="text-button" hidden>Remove</button></div>
+          </fieldset>
+          <fieldset class="step" id="payload-step"><legend><span class="step-number">02</span>Add your secret</legend><div class="payload-tabs" role="tablist" aria-label="Payload type"><button type="button" role="tab" aria-selected="true" id="tab-text" aria-controls="panel-text" data-type="text"><span>≡</span> Text message</button><button type="button" role="tab" aria-selected="false" id="tab-file" aria-controls="panel-file" data-type="file"><span>▧</span> File</button><button type="button" role="tab" aria-selected="false" id="tab-audio" aria-controls="panel-audio" data-type="audio"><span>♫</span> Audio</button></div>
+            <div id="panel-text" role="tabpanel" aria-labelledby="tab-text"><label for="secret-text" class="sr-only">Secret message</label><textarea id="secret-text" placeholder="Some things are better kept between us…" maxlength="1000000"></textarea><div class="input-footer"><span>Encrypted before it touches a pixel</span><span id="text-count">0 bytes</span></div></div>
+            <div id="panel-file" role="tabpanel" aria-labelledby="tab-file" hidden><label for="secret-file" class="file-label">Choose a file to hide <span>Any file type · up to 4 MB</span></label><input type="file" id="secret-file"><p class="file-selection" id="file-selection">No file selected</p></div>
+            <div id="panel-audio" role="tabpanel" aria-labelledby="tab-audio" hidden><label for="secret-audio" class="file-label">Choose an audio message <span>WAV, MP3, OGG, M4A or WebM · up to 4 MB</span></label><input type="file" id="secret-audio" accept="audio/*"><p class="file-selection" id="audio-selection">No audio selected</p></div>
+          </fieldset>
+          <fieldset class="step passphrase-step"><legend><span class="step-number" id="password-number">03</span>Lock it with a passphrase</legend><p class="step-description" id="password-description">Make it memorable. Make it yours. Keep it safe.</p><label class="sr-only" for="passphrase">Passphrase</label><div class="password-wrap"><span aria-hidden="true">⌑</span><input id="passphrase" type="password" placeholder="Enter your secret passphrase" autocomplete="off" minlength="8" maxlength="1024" required><button type="button" id="password-toggle" aria-label="Show passphrase" aria-pressed="false">Show</button></div><div class="password-note"><span id="strength">Use at least 8 characters. A longer phrase is better.</span><span>AES-256-GCM</span></div></fieldset>
+          <div class="submit-area"><p><span>⌑</span> Your image. Your secret. Your device.</p><button class="primary" id="run" type="submit"><span id="run-label">Encrypt & hide data</span><span>↗</span></button></div>
+        </form>
+        <div id="status" role="status" aria-live="polite" hidden></div>
+        <section id="result" class="result" hidden aria-label="Operation result"><div class="result-heading"><span>✓</span><h3 id="result-title">Your secret is ready.</h3></div><p id="result-description"></p><pre id="recovered-text" hidden></pre><audio id="recovered-audio" controls hidden></audio><button id="download" class="primary" type="button">Download PNG <span>↓</span></button><button id="use-result" class="text-button" type="button" hidden>Test this image in Reveal data ↗</button></section>
+      </section>
+      <aside class="inspector" aria-label="Image inspector"><div class="preview-card"><div class="preview-heading"><h2>Your canvas</h2><span class="live"><i></i> LIVE PREVIEW</span></div><div class="image-preview" id="preview-wrap"><canvas id="preview" width="600" height="440" aria-label="Selected image preview"></canvas><span class="preview-empty" id="preview-empty">Your image goes here.<small>The secret stays out of sight.</small></span><span class="preview-label" id="preview-label" hidden>ORIGINAL COVER</span></div><div class="image-stats"><div><span>Dimensions</span><strong id="dimensions">— × —</strong></div><div><span>Payload capacity</span><strong id="capacity">—</strong></div></div><div class="capacity-section"><div><span>Space used</span><strong id="space-used">0%</strong></div><progress id="capacity-bar" value="0" max="100">0%</progress><p id="capacity-note">Choose an image to see available space.</p></div></div>
+        <div class="privacy-card"><div class="privacy-icon">⌑</div><h3>Privacy comes naturally.</h3><p>No uploads. No accounts. No servers processing your secrets. Everything happens right here in your browser.</p><div><span>✓ Local encryption</span><span>✓ Zero cloud storage</span></div></div>
+        <div class="tip"><span>✧</span><p><strong>A small tip</strong><br>Share the exported PNG as a file. Social apps can compress photos and erase hidden data.</p></div>
+      </aside>
+    </div>
+    <footer><span>Made for the things you want to keep to yourself.</span><span>STEG STUDIO <i>✦</i> WEB EDITION</span></footer>
+  </main>
+  <dialog id="guide-dialog"><div class="dialog-header"><span class="eyebrow">THE ART OF HIDDEN</span><button type="button" data-close aria-label="Close guide">×</button></div><h2>A secret in three steps.</h2><ol><li><strong>Choose an image.</strong> A larger image has more room for your payload. Transparent covers are flattened onto white to keep exported pixels reliable.</li><li><strong>Add your secret.</strong> Type a message or choose a file or audio clip, then enter a passphrase of at least 8 characters.</li><li><strong>Download and share the PNG.</strong> Share the passphrase separately. Reveal data recovers the secret from the unedited PNG.</li></ol><div class="guide-note">This web edition uses the STGWEB01 format with AES-256-GCM and PBKDF2-SHA256. Desktop and upstream image formats are not compatible. There is no passphrase recovery. Encryption protects the content; steganography does not guarantee the presence of hidden data is undetectable.</div><button type="button" class="primary" data-close>Back to the studio ↗</button></dialog>
+  <dialog id="history-dialog"><div class="dialog-header"><span class="eyebrow">THIS SESSION</span><button type="button" data-close aria-label="Close history">×</button></div><h2>A little trail of activity.</h2><p class="muted">Only operation type and time are kept in memory. Closing the page clears this history.</p><ul id="history-list"><li>No activity yet. Your next secret starts here.</li></ul><button id="history-clear" type="button" class="text-button">Clear history</button></dialog>
+</body></html>

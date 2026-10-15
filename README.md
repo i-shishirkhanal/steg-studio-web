@@ -1,5 +1,7 @@
 # Steg Studio Web
 
+**Live website:** [steg-studio-web.vercel.app](https://steg-studio-web.vercel.app)
+
 A browser-only image steganography workspace for Shishir Khanal. Encrypt text, files, or audio and hide them inside a PNG, then recover the content using its passphrase. Images and passphrases are processed on the device: no application backend, uploads, analytics, or cloud storage.
 
 ## Run and build
